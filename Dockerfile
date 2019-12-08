@@ -1,5 +1,11 @@
 FROM tomcat:7.0-jre8 as extractor
-ADD http://archive.apache.org/dist/lucene/solr/4.2.1/solr-4.2.1.tgz /
+ADD https://archive.apache.org/dist/lucene/solr/4.2.1/solr-4.2.1.tgz /
+ADD https://archive.apache.org/dist/lucene/solr/4.2.1/solr-4.2.1.tgz.asc /
+ADD https://archive.apache.org/dist/lucene/solr/4.2.1/KEYS.txt /
+RUN gpg --import /KEYS.txt
+RUN gpg --verify /solr-4.2.1.tgz.asc /solr-4.2.1.tgz
+
+RUN tar --extract --file /solr-4.2.1.tgz -C /
 RUN unzip /solr-4.2.1/dist/solr-4.2.1.war -d /solr-war
 
 
